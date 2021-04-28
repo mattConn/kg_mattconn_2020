@@ -26,13 +26,16 @@ func NewDigits() PhoneticDigits {
 }
 
 func (p PhoneticDigits) PhoneticizeInt(n int) (string, error) {
+	if n < 0 {
+		return "", errors.New(fmt.Sprintf("Cannot phoneticize %d. Must be positive.\n", n))
+	}
 	length := int(math.Log10(float64(n))) + 1
 	output := make([]string, length)
 	i := length - 1
 
 	for i >= 0 {
 		d := n % 10
-		str, err := p.PhoneticizeDigit(d)
+		str, err := p.phoneticizeDigit(d)
 		if err != nil {
 			return "", errors.New(fmt.Sprintf("Cannot phoneticize integer %d. %s", n, err.Error()))
 		}
@@ -44,7 +47,7 @@ func (p PhoneticDigits) PhoneticizeInt(n int) (string, error) {
 	return strings.Join(output, ""), nil
 }
 
-func (p PhoneticDigits) PhoneticizeDigit(n int) (string, error) {
+func (p PhoneticDigits) phoneticizeDigit(n int) (string, error) {
 	if n < 0 || n > 9 {
 		return "", errors.New(fmt.Sprintf("Cannot phoneticize digit %d, must be in range 0-9.\n", n))
 	}
