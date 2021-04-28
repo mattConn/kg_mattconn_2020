@@ -10,22 +10,20 @@ import (
 // mapping from ints 0-9 to strings
 type PhoneticDigits [10]string
 
-func NewDigits() PhoneticDigits {
-	return [10]string{
-		"Zero",
-		"One",
-		"Two",
-		"Three",
-		"Four",
-		"Five",
-		"Six",
-		"Seven",
-		"Eight",
-		"Nine",
-	}
+var Digits PhoneticDigits = [10]string{
+	"Zero",
+	"One",
+	"Two",
+	"Three",
+	"Four",
+	"Five",
+	"Six",
+	"Seven",
+	"Eight",
+	"Nine",
 }
 
-func (p PhoneticDigits) PhoneticizeInt(n int) (string, error) {
+func PhoneticizeInt(n int) (string, error) {
 	if n < 0 {
 		return "", errors.New(fmt.Sprintf("Cannot phoneticize %d. Must be positive.\n", n))
 	}
@@ -35,7 +33,7 @@ func (p PhoneticDigits) PhoneticizeInt(n int) (string, error) {
 
 	for i >= 0 {
 		d := n % 10
-		str, err := p.phoneticizeDigit(d)
+		str, err := phoneticizeDigit(d)
 		if err != nil {
 			return "", errors.New(fmt.Sprintf("Cannot phoneticize integer %d. %s", n, err.Error()))
 		}
@@ -47,9 +45,9 @@ func (p PhoneticDigits) PhoneticizeInt(n int) (string, error) {
 	return strings.Join(output, ""), nil
 }
 
-func (p PhoneticDigits) phoneticizeDigit(n int) (string, error) {
+func phoneticizeDigit(n int) (string, error) {
 	if n < 0 || n > 9 {
 		return "", errors.New(fmt.Sprintf("Cannot phoneticize digit %d, must be in range 0-9.\n", n))
 	}
-	return p[n], nil
+	return Digits[n], nil
 }

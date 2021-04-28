@@ -23,13 +23,11 @@ func TestPhoneticizeInt(t *testing.T) {
 		},
 	}
 
-	p := phonetic.NewDigits()
-
 	for _, test := range tests {
 		output := make([]string, len(test.input))
 		i := 0
 		for _, n := range test.input {
-			val, err := p.PhoneticizeInt(n)
+			val, err := phonetic.PhoneticizeInt(n)
 			if err != nil {
 				t.Error(err)
 				break

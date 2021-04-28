@@ -7,7 +7,7 @@ import (
 	"github.com/mattConn/kg_mattconn_2020/phonetic"
 )
 
-func ExamplePhoneticDigits_PhoneticizeInt() {
+func ExamplePhoneticizeInt() {
 	examples := []struct {
 		name  string
 		input []int
@@ -26,8 +26,6 @@ func ExamplePhoneticDigits_PhoneticizeInt() {
 		},
 	}
 
-	p := phonetic.NewDigits()
-
 	for _, example := range examples {
 		fmt.Println(example.name)
 		fmt.Println(fmt.Sprint(example.input))
@@ -35,7 +33,7 @@ func ExamplePhoneticDigits_PhoneticizeInt() {
 		output := make([]string, len(example.input))
 		i := 0
 		for _, n := range example.input {
-			str, err := p.PhoneticizeInt(n)
+			str, err := phonetic.PhoneticizeInt(n)
 			if err != nil {
 				fmt.Println(err.Error())
 				break
