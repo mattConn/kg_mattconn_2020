@@ -13,6 +13,7 @@ func main() {
 	args := os.Args[1:]
 	if len(args) == 0 {
 		fmt.Println("Missing arguments.")
+		return
 	}
 
 	output := make([]string, len(args))
