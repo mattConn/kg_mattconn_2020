@@ -1,10 +1,17 @@
 package phonetic
 
+import (
+	"errors"
+	"fmt"
+	"math"
+	"strings"
+)
+
 // mapping from ints 0-9 to strings
-type PhoneticDigits []string
+type PhoneticDigits [10]string
 
 func NewDigits() PhoneticDigits {
-	return []string{
+	return [10]string{
 		"Zero",
 		"One",
 		"Two",
@@ -19,8 +26,27 @@ func NewDigits() PhoneticDigits {
 }
 
 func (p PhoneticDigits) PhoneticizeInt(n int) (string, error) {
-	return "", nil
+	length := int(math.Log10(float64(n))) + 1
+	output := make([]string, length)
+	i := length - 1
+
+	for i >= 0 {
+		d := n % 10
+		str, err := p.PhoneticizeDigit(d)
+		if err != nil {
+			return "", errors.New(fmt.Sprintf("Cannot phoneticize integer %d. %s", n, err.Error()))
+		}
+		output[i] = str
+		n /= 10
+		i--
+	}
+
+	return strings.Join(output, ""), nil
 }
+
 func (p PhoneticDigits) PhoneticizeDigit(n int) (string, error) {
-	return "", nil
+	if n < 0 || n > 9 {
+		return "", errors.New(fmt.Sprintf("Cannot phoneticize digit %d, must be in range 0-9.\n", n))
+	}
+	return p[n], nil
 }
