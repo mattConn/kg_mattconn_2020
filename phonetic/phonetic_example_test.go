@@ -31,9 +31,11 @@ func ExamplePhoneticizeInt() {
 		fmt.Println(fmt.Sprint(example.input))
 
 		output := make([]string, len(example.input))
+		var str string
+		var err error
 		i := 0
 		for _, n := range example.input {
-			str, err := phonetic.PhoneticizeInt(n)
+			str, err = phonetic.PhoneticizeInt(n)
 			if err != nil {
 				fmt.Println(err.Error())
 				break
@@ -41,7 +43,9 @@ func ExamplePhoneticizeInt() {
 			output[i] = str
 			i++
 		}
-		fmt.Println(strings.Join(output, ","))
+		if err == nil {
+			fmt.Println(strings.Join(output, ","))
+		}
 		fmt.Println()
 
 	}
@@ -50,11 +54,11 @@ func ExamplePhoneticizeInt() {
 	// Simple
 	// [3 25 209]
 	// Three,TwoFive,TwoZeroNine
-
+	//
 	// Negative
 	// [-10 300 5]
 	// Cannot phoneticize -10. Must be positive.
-
+	//
 	// Empty
 	// []
 	//

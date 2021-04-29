@@ -10,7 +10,7 @@ import (
 // Mapping from ints 0-9 to strings
 type PhoneticDigits [10]string
 
-var Digits PhoneticDigits = [10]string{
+var digits PhoneticDigits = [10]string{
 	"Zero",
 	"One",
 	"Two",
@@ -27,7 +27,7 @@ var Digits PhoneticDigits = [10]string{
 // representing the phonetic equivalent of that integer, as well as an error.
 func PhoneticizeInt(n int) (string, error) {
 	if n < 0 {
-		return "", errors.New(fmt.Sprintf("Cannot phoneticize %d. Must be positive.\n", n))
+		return "", errors.New(fmt.Sprintf("Cannot phoneticize %d. Must be positive.", n))
 	}
 
 	// Lenght of integer.
@@ -48,10 +48,10 @@ func PhoneticizeInt(n int) (string, error) {
 	return strings.Join(output, ""), nil
 }
 
-// Look up digit in Digits array.
+// Look up digit in digits array.
 func phoneticizeDigit(n int) (string, error) {
 	if n < 0 || n > 9 {
-		return "", errors.New(fmt.Sprintf("Cannot phoneticize digit %d, must be in range 0-9.\n", n))
+		return "", errors.New(fmt.Sprintf("Cannot phoneticize digit %d, must be in range 0-9.", n))
 	}
-	return Digits[n], nil
+	return digits[n], nil
 }
