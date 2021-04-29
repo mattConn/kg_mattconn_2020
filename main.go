@@ -27,7 +27,7 @@ func main() {
 
 		output[i], err = phonetic.PhoneticizeInt(n)
 		if err != nil {
-			fmt.Printf(err.Error())
+			fmt.Println(err.Error())
 			return
 		}
 		i++
