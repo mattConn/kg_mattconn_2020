@@ -3,17 +3,35 @@ package main
 import (
 	"fmt"
 	"os"
+	"strconv"
+	"strings"
+
+	"github.com/mattConn/kg_mattconn_2020/phonetic"
 )
 
-// 1. get input
-// 2. check if input exists
-// 3. check if each string is a valid integer
-// 4. slice each string, getting phonetic equivalent, store in array
-// 5. print
-
 func main() {
-	input := os.Args[1:]
-	if len(input) == 0 {
+	args := os.Args[1:]
+	if len(args) == 0 {
 		fmt.Println("Missing arguments.")
+		return
 	}
+
+	output := make([]string, len(args))
+	i := 0
+	for _, input := range args {
+		n, err := strconv.Atoi(input)
+		if err != nil {
+			fmt.Printf("Invalid argument: %s\n", input)
+			return
+		}
+
+		output[i], err = phonetic.PhoneticizeInt(n)
+		if err != nil {
+			fmt.Printf(err.Error())
+			return
+		}
+		i++
+	}
+
+	fmt.Println(strings.Join(output, ","))
 }
